@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <br>
+    <div class="jumbotron">
+        <h1 class="display-4">Shipping Unit Program</h1>
+        {% if user.is_authenticated %}
+            Hi {{ user.username }}!   
+            <hr class="my-4">
+            <a href="{% url 'unit_list' %}" role="button" class="btn btn-primary btn-lg">View Shipments!</a>
+            <br><br>
+            <p><a href="{% url 'logout' %}" role="button" class="btn btn-primary btn-sm">Log Out</a></p>
+        {% else %}
+            <p>You are not logged in</p>
+            <hr class="my-4">
+            <a href="{% url 'login' %}" role="button" class="btn btn-primary btn-lg">Log In</a>
+        {% endif %}
+    </div>
+    
+{% endblock content %}

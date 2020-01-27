@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Shipping Unit List{% endblock title %}
+
+{% block content %}
+    {% if unit_list %}
+        {% for unit in unit_list %}
+        <br>
+        <div class="container">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h4 class="card-title"><a href="{{ unit.get_absolute_url }}">Shipping Unit Number: {{ unit.on_hand }}</a></h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-subtitle mb-2">Client: {{ unit.client }}</h5>
+                    <br>
+                    <p class="card-text">Purpose: {{ unit.purpose }}</p>
+                    <p class="card-text">Create Date: {{ unit.create_date }}</p>
+                    {% if unit.release_date %}
+                        <p class="card-text">Release Date: {{ unit.release_date }}</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'unit_edit' unit.pk %}" class="card-link btn btn-primary">Edit</a>
+                    <a href="{% url 'unit_delete' unit.pk %}" class="card-link btn btn-primary">Delete</a>
+                    {% if not unit.release_date %}
+                        <a href="{% url 'unit_release' unit.pk %}" class="card-link btn btn-primary">Release {{ unit.on_hand }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <br>
+        <div class="container">
+            <h2><a href="{% url 'units_release' %}" class="btn btn-primary btn-lg btn-block">Release Shipments</a></h2>
+            <h2><a href="{% url 'csv_units' %}" class="btn btn-primary btn-lg btn-block">Generate Report</a></h2>
+        </div>
+    {% else %}
+    <h1>No units!</h1>
+    {% endif %}
+
+{% endblock content %}

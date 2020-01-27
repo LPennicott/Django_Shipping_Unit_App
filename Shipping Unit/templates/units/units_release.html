@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Shipping Unit List{% endblock title %}
+
+{% block content %}
+    {% if unit_list %}
+        {% for unit in unit_list %}
+        <br>
+        <form method="post" action="{% url 'units_released' %}" novalidate>
+            {% csrf_token %}
+        <div class="container">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="card-title"><input type="checkbox" aria-label="Checkbox for following text input" name="onhands[]" value="{{ unit.on_hand }}">&nbsp;<a href="{{ unit.get_absolute_url }}">Shipping Unit Number: {{ unit.on_hand }}</a></h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Client: {{ unit.client }}</h6>
+                    <p class="card-text">Purpose: {{ unit.purpose }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'unit_edit' unit.pk %}" class="card-link">Edit</a>
+                    <a href="{% url 'unit_delete' unit.pk %}" class="card-link">Delete</a>
+                    <a href="{% url 'unit_release' unit.pk %}">Release {{ unit.on_hand }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <input type="submit" value="Release Shipments" class="btn btn-info btn-lg">
+        </form>
+    {% else %}
+    <h1>No units selected!</h1>
+    <a href="{% url 'unit_list' %}">View Shipments</a>
+    {% endif %}
+
+{% endblock content %}

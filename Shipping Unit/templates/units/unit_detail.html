@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Shipping Unit: {{ unit.on_hand }}{% endblock title %}
+
+{% block content %}
+<br>
+<div class="card text-center">
+    <div class="card-header">
+        <h2>Shipping Unit: {{ unit.on_hand }}</h2>
+    </div>
+    <div class="card-body">
+        <p>Client: {{ unit.client }}</p>
+        <p>Width: {{ unit.width }}</p>
+        <p>Length: {{ unit.length }}</p>
+        <p>Height: {{ unit.height }}</p>
+        <p>Gross Weight: {{ unit.gross_weight }}</p>
+        <p>Create Date: {{ unit.create_date }}</p>
+        {% if unit.release_date %}
+            <p>Release Date: {{ unit.release_date }}</p>
+        {% endif %}
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'unit_edit' unit.pk %}" class="card-link btn btn-info">Edit</a>
+        <a href="{% url 'unit_delete' unit.pk %}" class="card-link btn btn-danger">Delete</a>
+        <a href="{% url 'unit_release' unit.pk %}" class="card-link btn btn-primary">Release {{ unit.on_hand }}</a>
+    </div>
+</div>
+{% endblock content %}
