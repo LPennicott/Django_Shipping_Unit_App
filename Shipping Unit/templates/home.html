@@ -7,7 +7,7 @@
     <div class="jumbotron">
         <h1 class="display-4">Shipping Unit Program</h1>
         {% if user.is_authenticated %}
-            Hi {{ user.username }}!   
+            <h3 class="display-5">Hi {{ user.username }}!</h3>   
             <hr class="my-4">
             <a href="{% url 'unit_list' %}" role="button" class="btn btn-primary btn-lg">View Shipments!</a>
             <br><br>

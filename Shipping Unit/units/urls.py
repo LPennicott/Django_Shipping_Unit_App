@@ -1,16 +1,19 @@
 from django.urls import path
 
 from .views import (
-        HomePageView, 
-        UnitListView, 
-        UnitDetailView,
+        HomePageView,
+        UnitListView,
+        UnitReleasePage,
         UnitUpdateView,
         UnitDeleteView,
         UnitCreateView,
+        UnitDetailView,
         UnitReleaseView,
         UnitsReleaseView,
-        UnitReleasePage,
         ExportListView,
+        SearchResultsListView,
+        CreateConsolView,
+        Consolidation,
     )
 
 urlpatterns = [
@@ -24,4 +27,7 @@ urlpatterns = [
     path('units/<int:pk>/release/', UnitReleaseView.as_view() , name = 'unit_release'),
     path('units/released/', UnitsReleaseView.as_view(), name ='units_released'),
     path('units/export/', ExportListView.as_view(), name = 'csv_units'),
+    path('units/search/', SearchResultsListView.as_view(), name = 'search_results'),
+    path('units/new_consol/', CreateConsolView.as_view(), name = 'create_consol'),
+    path('units/consol/', Consolidation.as_view(), name = 'save_consol'),
 ]

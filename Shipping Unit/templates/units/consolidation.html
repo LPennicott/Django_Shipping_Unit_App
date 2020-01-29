@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Consol{% endblock title %}
+
+{% block content %}
+    {% if unit_list %}
+        {% for unit in unit_list %}
+        <br>
+        <form method="post" action="{% url 'save_consol' %}" novalidate>
+            {% csrf_token %}
+        <div class="container">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="card-title"><input type="checkbox" aria-label="Checkbox for following text input" name="onhands[]" value="{{ unit.on_hand }}">&nbsp;<a href="{{ unit.get_absolute_url }}">Shipping Unit Number: {{ unit.on_hand }}</a></h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Client: {{ unit.client }}</h6>
+                    <p class="card-text">Purpose: {{ unit.purpose }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="MAWB" name="mawb">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="HAWB" name="hawb">
+                </div>
+            </div>
+            <br>
+            <input type="submit" value="Create Consolidation" class="btn btn-info btn-lg">
+        </div>
+        </form>
+        <br>
+        <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Shipping Units: </li>
+                <li class="list-group-item">Total Weight: </li>
+            </ul>
+        </div>
+    {% else %}
+    <div class="container">
+        <h1>No units released! You must release a shipment before you can add it to a consolidation.</h1>
+        <a href="{% url 'units_release' %}" class="btn btn-primary btn-lg">Release Shipments</a>
+        <a href="{% url 'unit_list' %}" class="btn btn-primary btn-lg">View Shipments</a>
+    </div>
+    {% endif %}
+
+{% endblock content %}

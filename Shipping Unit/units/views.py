@@ -1,11 +1,13 @@
 from django.views.generic import TemplateView, ListView, DetailView
-from django.views.generic.edit import UpdateView, DeleteView, CreateView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView, FormView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from django.db.models import Q
 import datetime, csv
 
 from .models import Shipping_Units
+
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -60,6 +62,7 @@ class UnitsReleaseView(ListView):
 class ExportListView(ListView):
     model = Shipping_Units
     context_object_name = 'unit'
+    queryset = Shipping_Units.objects.filter(release_date = datetime.datetime.today())
 
     def render_to_response(self, context, **response_kwargs):
         unit = context.get('unit')
@@ -71,3 +74,32 @@ class ExportListView(ListView):
         for unit in units:
             writer.writerow(unit)
         return response
+
+class SearchResultsListView(ListView):
+    model = Shipping_Units
+    context_object_name = 'unit_list'
+    template_name = 'units/search_results.html'
+    ordering = ['-on_hand']
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Shipping_Units.objects.filter(
+            Q(client__icontains = query) | Q(on_hand__contains = query) | Q(purpose__icontains = query)
+        )
+
+class CreateConsolView(ListView):
+    model = Shipping_Units
+    context_object_name = 'unit_list'
+    template_name = 'units/consolidation.html'
+    queryset = Shipping_Units.objects.exclude(release_date = None).filter(mawb = None, purpose = 'Export')
+
+class Consolidation(ListView):
+    model = Shipping_Units
+    
+    def post(self, request, *args, **kwargs):
+        units = request.POST.getlist('onhands[]')
+        mawb = request.POST.get('mawb')
+        hawb = request.POST.get('hawb')
+        unit_mawb = Shipping_Units.objects.filter(on_hand__in = units).update(mawb = mawb)
+        unit_hawb = Shipping_Units.objects.filter(on_hand__in = units).update(hawb = hawb)
+        return redirect('unit_list')
