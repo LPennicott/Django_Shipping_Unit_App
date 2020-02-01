@@ -9,14 +9,20 @@
         <h2>Shipping Unit: {{ unit.on_hand }}</h2>
     </div>
     <div class="card-body">
-        <p>Client: {{ unit.client }}</p>
-        <p>Width: {{ unit.width }}</p>
-        <p>Length: {{ unit.length }}</p>
-        <p>Height: {{ unit.height }}</p>
-        <p>Gross Weight: {{ unit.gross_weight }}</p>
-        <p>Create Date: {{ unit.create_date }}</p>
+        <p class="card-text">Client: {{ unit.client }}</p>
+        <p class="card-text">Width: {{ unit.width }} in</p>
+        <p class="card-text">Length: {{ unit.length }} in</p>
+        <p class="card-text">Height: {{ unit.height }} in</p>
+        <p class="card-text">Gross Weight: {{ unit.gross_weight }} lbs</p>
+        <p class="card-text">Create Date: {{ unit.create_date }}</p>
         {% if unit.release_date %}
-            <p>Release Date: {{ unit.release_date }}</p>
+            <p class="card-text">Release Date: {{ unit.release_date }}</p>
+        {% endif %}
+        {% if unit.mawb %}
+            <p class="card-text">MAWB: {{ unit.mawb }}</p>
+        {% endif %}
+        {% if unit.hawb %}
+            <p class="card-text">HAWB: {{ unit.hawb }}</p>
         {% endif %}
     </div>
     <div class="card-footer">

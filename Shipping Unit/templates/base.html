@@ -30,6 +30,7 @@
                     <li>
                         <a class="nav-link" href="{% url 'unit_new' %}">Create Shipment</a>
                     </li>
+                    <li class="navbar-brand mb-0 h5">Hey what's happening {{ user.username }}??!!</li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" action="{% url 'search_results' %}">
                     <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
@@ -43,9 +44,12 @@
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-action">Shipments in house: <span id="unit_count" class="badge badge-primary badge-pill">{% unit_count %}</span></li>
                     <li class="list-group-item list-group-item-action">Shipments released: <span id="released_count" class="badge badge-primary badge-pill">{% released_count %}</span></li>
-                    <li class="list-group-item list-group-item-action">Total Weight in House: <span id="released_count" class="badge badge-primary badge-pill">{% in_house_weight %}</span></li>
+                    <li class="list-group-item list-group-item-action">Total Weight in House: <span id="released_count" class="badge badge-primary badge-pill">{% in_house_weight %} kg</span></li>
+                    <li class="list-group-item list-group-item-action">Today's Received Pallets: <span id="released_count" class="badge badge-primary badge-pill">{% today_delivery %}</span></li>
                     <a href="{% url 'unit_list' %}" class="list-group-item list-group-item-action">View Shipments</a>
                     <a href="{% url 'unit_new' %}" class="list-group-item list-group-item-action">Create Shipment</a>
+                    <a href="{% url 'delivery_list' %}" class="list-group-item list-group-item-action">View Deliveries</a>
+                    <a href="{% url 'new_delivery' %}" class="list-group-item list-group-item-action">New Delivery</a>
                 </ul>
             </aside>
         </div>

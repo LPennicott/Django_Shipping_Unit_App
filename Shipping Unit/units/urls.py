@@ -1,20 +1,6 @@
 from django.urls import path
 
-from .views import (
-        HomePageView,
-        UnitListView,
-        UnitReleasePage,
-        UnitUpdateView,
-        UnitDeleteView,
-        UnitCreateView,
-        UnitDetailView,
-        UnitReleaseView,
-        UnitsReleaseView,
-        ExportListView,
-        SearchResultsListView,
-        CreateConsolView,
-        Consolidation,
-    )
+from .views import *
 
 urlpatterns = [
     path('', HomePageView.as_view(), name = 'home'),
@@ -30,4 +16,8 @@ urlpatterns = [
     path('units/search/', SearchResultsListView.as_view(), name = 'search_results'),
     path('units/new_consol/', CreateConsolView.as_view(), name = 'create_consol'),
     path('units/consol/', Consolidation.as_view(), name = 'save_consol'),
+    path('inbound/new_delivery/', new_delivery, name = 'new_delivery'),
+    path('inbound/delivery_list/', delivery_list, name = 'delivery_list'),
+    path('inbound/edit_delivery/<int:pk>/', edit_delivery, name = 'delivery_edit'),
+    path('inbound/email/', email_delivery, name = 'email'),
 ]
