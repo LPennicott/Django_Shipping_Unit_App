@@ -78,7 +78,8 @@ class UnitsReleaseView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def post(self, request, *args, **kwargs):
         units = request.POST.getlist('onhands[]')
-        released_units = Shipping_Units.objects.filter(on_hand__in = units).update(release_date = datetime.datetime.today())
+        released_units = Shipping_Units.objects.filter(on_hand__in = units)\
+            .update(release_date = datetime.datetime.today())
         return redirect('unit_list')
 
 class ExportListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -86,15 +87,27 @@ class ExportListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'unit'
     queryset = Shipping_Units.objects.filter(release_date = datetime.datetime.today())
     login_url = 'account_login'
-
+    permission_required = ('units.can_modify')
 
     def render_to_response(self, context, **response_kwargs):
         unit = context.get('unit')
-        units = unit.values_list('client', 'width', 'length', 'height', 'gross_weight', 'purpose',)
+        units = unit.values_list('client', 
+            'width', 
+            'length', 
+            'height', 
+            'gross_weight', 
+            'purpose',
+            )
         response = HttpResponse(content_type = 'text/csv')
         response['Content-Disposition'] = 'attachment; filename = "units.csv"'
         writer = csv.writer(response)
-        writer.writerow(['Client', 'Width', 'Length', 'Height', 'Gross Weight', 'Purpose'])
+        writer.writerow(['Client', 
+            'Width', 
+            'Length', 
+            'Height', 
+            'Gross Weight', 
+            'Purpose'
+            ])
         for unit in units:
             writer.writerow(unit)
         return response
@@ -117,7 +130,8 @@ class CreateConsolView(LoginRequiredMixin, ListView):
     model = Shipping_Units
     context_object_name = 'unit_list'
     template_name = 'units/consolidation.html'
-    queryset = Shipping_Units.objects.exclude(release_date = None).filter(mawb = None, purpose = 'Export')
+    queryset = Shipping_Units.objects.exclude(release_date = None)\
+    .filter(mawb = None, purpose = 'Export')
     login_url = 'account_login'
 
 class Consolidation(LoginRequiredMixin, PermissionRequiredMixin, ListView):
