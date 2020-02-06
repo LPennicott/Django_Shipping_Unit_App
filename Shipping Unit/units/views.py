@@ -129,8 +129,8 @@ class Consolidation(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         units = request.POST.getlist('onhands[]')
         mawb = request.POST.get('mawb')
         hawb = request.POST.get('hawb')
-        unit_mawb = Shipping_Units.objects.filter(on_hand__in = units).update(mawb = mawb)
-        unit_hawb = Shipping_Units.objects.filter(on_hand__in = units).update(hawb = hawb)
+        Shipping_Units.objects.filter(on_hand__in = units).update(mawb = mawb)
+        Shipping_Units.objects.filter(on_hand__in = units).update(hawb = hawb)
         return redirect('unit_list')
 
 @login_required
@@ -175,6 +175,9 @@ def email_delivery(request):
     subject = f'Pallets Received {datetime.datetime.today().strftime("%Y-%m-%d")}'
     message = f'Good Afternoon,\n\nWe received {sum_delivery} pallets today.'
     email_from = 'ACPShipping_Unit@aircitypost.com'
-    recipient_list = ['lpennicott@aircitypost.com', 'JRalph@aircitypost.com']
+    recipient_list = ['lpennicott@aircitypost.com', 
+    'JRalph@aircitypost.com', 
+    'SMasterson@aircitypost.com',
+    'NCraigen@aircitypost.com',]
     send_mail( subject, message, email_from, recipient_list )
     return redirect('/inbound/delivery_list/')
