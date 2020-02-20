@@ -11,18 +11,17 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from dotenv import load_dotenv
-load_dotenv()
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+django_secret = os.getenv('django_shipping_unit')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v8f6_h!iby0aj-9%iarmd9@=x-lh-!mssk5)$xfvlzgypjka%c'
+SECRET_KEY = django_secret
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
