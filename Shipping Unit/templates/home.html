@@ -5,7 +5,7 @@
 {% block content %}
     <br>
     <div class="jumbotron shadow">
-        <h1 class="display-4">Shipping Unit Program</h1>
+        <h1 class="display-4">Flying Stars Sign Up!</h1>
         {% if user.is_authenticated %}
             <h3 class="display-5">Hi {{ user.username }}!</h3>   
             <hr class="my-4">
@@ -18,5 +18,47 @@
             <a href="{% url 'login' %}" role="button" class="btn btn-primary btn-lg">Log In</a>
         {% endif %}
     </div>
-    
+
+    {% if user.is_authenticated %}
+    <div class="mb-4">
+        <h2 class="mb-3">Available Records</h2>
+        <p class="lead">
+            Total Records: <strong>{{ total_records }}</strong><br>
+            Active: <strong>{{ active_count }}</strong><br>
+            Competitive: <strong>{{ competitive_count }}</strong>
+        </p>
+    </div>
+
+    <div class="row">
+        {% for record in records %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ record.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ record.email }}</h6>
+                        <p class="card-text">
+                            <strong>Phone:</strong> {{ record.phone }}<br>
+                            <strong>Age:</strong> {{ record.age }}<br>
+                            <strong>Level:</strong> {{ record.level }}<br>
+                            <strong>Active:</strong> {{ record.active|yesno:"Yes,No" }}<br>
+                            <strong>Competitive:</strong> {{ record.competitive|yesno:"Yes,No" }}
+                        </p>
+                        <a href="{% url 'record_new' %}">
+                            <button type="button" class="btn btn-primary mb-4">Add New</button>
+                        </a>
+                        <a href="{% url 'export_records_csv' %}">
+                            <button type="button" class="btn btn-outline-secondary mb-4">Export as CSV</button>
+                        </a>
+
+
+                        <a href="{% url 'record_detail' record.pk %}" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No records available.</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
 {% endblock content %}
