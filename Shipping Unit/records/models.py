@@ -1,17 +1,30 @@
 from django.db import models
 from django.urls import reverse
 
+
 class Record(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    phone = models.CharField(max_length=20)
-    age = models.PositiveIntegerField()
-    active = models.BooleanField(default=False)
-    competitive = models.BooleanField(default=False)
-    level = models.CharField(max_length=20, blank=True, null=True)
-    challenges = models.TextField(blank=True, null=True)
-    resources = models.TextField(blank=True, null=True)
-    recommendations = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=100, verbose_name="Full Name")
+    email = models.EmailField(verbose_name="Email Address")
+    phone = models.CharField(max_length=20, verbose_name="Phone Number")
+    age = models.PositiveIntegerField(verbose_name="Child's Age")
+
+    active = models.BooleanField(
+        default=False, verbose_name="Is your child currently in gymnastics?")
+    competitive = models.BooleanField(
+        default=False, verbose_name="Do they compete in competitions?")
+    level = models.CharField(
+        max_length=50,
+
+        verbose_name="Competitive Level (Level/Xcel/IGH)"
+    )
+
+    challenges = models.CharField(
+        max_length=255, blank=True, verbose_name="Challenges Faced")
+    resources = models.CharField(
+        max_length=255, blank=True, verbose_name="Helpful Resources")
+    recommendations = models.CharField(
+        max_length=255, blank=True, verbose_name="Recommendations")
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):

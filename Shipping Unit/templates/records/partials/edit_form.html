@@ -1,0 +1,64 @@
+<form method="post" id="editRecordForm">
+  {% csrf_token %}
+
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      Edit Record
+    </div>
+    <div class="card-body">
+
+      <div class="mb-3">
+        {{ form.name.label_tag }}<br>
+        {{ form.name }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.email.label_tag }}<br>
+        {{ form.email }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.phone.label_tag }}<br>
+        {{ form.phone }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.age.label_tag }}<br>
+        {{ form.age }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.level.label_tag }}<br>
+        {{ form.level }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.active }} {{ form.active.label_tag }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.competitive }} {{ form.competitive.label_tag }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.challenges.label_tag }}<br>
+        {{ form.challenges }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.resources.label_tag }}<br>
+        {{ form.resources }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.recommendations.label_tag }}<br>
+        {{ form.recommendations }}
+      </div>
+    </div>
+  </div>
+
+  <div class="text-end">
+    <button type="submit" class="btn btn-success">Save</button>
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+  </div>
+</form>

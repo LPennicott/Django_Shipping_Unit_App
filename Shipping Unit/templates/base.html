@@ -1,95 +1,76 @@
-{% load unit_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Home{% endblock title %}</title>
 
-    <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-        <title>{% block title %}Home{% endblock title %}</title>
-    </head>
-    <body>
-        {% if user.is_authenticated %}
-        {% block nav %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark header">
-            <a class="navbar-brand" href="{% url 'home' %}">Flying Stars!</a><span class="text-white">{% now "F jS, Y" %}</span>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- Bootstrap CSS (v5) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+
+{% if user.is_authenticated %}
+    {% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'records:home' %}">Flying Stars!</a>
+            <span class="text-white">{% now "F jS, Y" %}</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'records:home' %}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                     </li>
                 </ul>
             </div>
-        </nav>
-        {% endblock nav %}
+        </div>
+    </nav>
+    {% endblock nav %}
+{% else %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'records:home' %}">Flying Stars!</a>
+        </div>
+    </nav>
+{% endif %}
 
-        <br>
-        <div class="container sidenav">
-            <aside class="float">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-action">Shipments in house: <span id="unit_count" class="badge badge-primary badge-pill">{% unit_count %}</span></li>
-                    <li class="list-group-item list-group-item-action">Shipments released: <span id="released_count" class="badge badge-primary badge-pill">{% released_count %}</span></li>
-                    <li class="list-group-item list-group-item-action">Total Weight in House: <span id="released_count" class="badge badge-primary badge-pill">{% in_house_weight %} kg</span></li>
-                    <li class="list-group-item list-group-item-action">Today's Received Pallets: <span id="released_count" class="badge badge-primary badge-pill">{% today_delivery %}</span></li>
-                    <a href="{% url 'unit_list' %}" class="list-group-item list-group-item-action">View Shipments</a>
-                    <a href="{% url 'unit_new' %}" class="list-group-item list-group-item-action">Create Shipment</a>
-                    <a href="{% url 'delivery_list' %}" class="list-group-item list-group-item-action">View Deliveries</a>
-                    <a href="{% url 'new_delivery' %}" class="list-group-item list-group-item-action">New Delivery</a>
-                </ul>
-            </aside>
-        </div>
-        {% else %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{% url 'home' %}">Flying Stars!</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                </ul>
-            </div>
-        </nav>
-        {% endif %}
-        <div class="container">
-            <div class="col-10 float-right">
-                {% block content %}
-                {% endblock content %}
-            </div>
-        </div>
-    <!-- Optional JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var csrftoken = Cookies.get('csrftoken');
-        function csrfSafeMethod(method) {
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(setting.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
+<div class="container mt-4">
+    {% block content %}
+    {% endblock content %}
+</div>
+
+<!-- CSRF setup -->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+    const csrftoken = Cookies.get('csrftoken');
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
-        });
-        $(document).ready(function(){
-            {% block javascript %}
-            {% endblock javascript %}
-        });
-    </script>
-    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
+        }
+    });
+</script>
+
+{% block javascript %}{% endblock javascript %}
+
+<script src="{% static 'js/base.js' %}"></script>
+
+<!-- Bootstrap JS (v5) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>

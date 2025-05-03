@@ -7,11 +7,11 @@
     <div class="jumbotron shadow">
         <h1 class="display-4">Flying Stars Sign Up!</h1>
         {% if user.is_authenticated %}
-            <h3 class="display-5">Hi {{ user.username }}!</h3>   
+            <!-- <h3 class="display-5">Hi {{ user.username }}!</h3>   
             <hr class="my-4">
             <a href="{% url 'unit_list' %}" role="button" class="btn btn-primary btn-lg">View Shipments!</a>
             <br><br>
-            <p><a href="{% url 'logout' %}" role="button" class="btn btn-primary btn-sm">Log Out</a></p>
+            <p><a href="{% url 'logout' %}" role="button" class="btn btn-primary btn-sm">Log Out</a></p> -->
         {% else %}
             <p>You are not logged in</p>
             <hr class="my-4">
@@ -43,15 +43,15 @@
                             <strong>Active:</strong> {{ record.active|yesno:"Yes,No" }}<br>
                             <strong>Competitive:</strong> {{ record.competitive|yesno:"Yes,No" }}
                         </p>
-                        <a href="{% url 'record_new' %}">
+                        <a href="{% url 'records:record_new' %}">
                             <button type="button" class="btn btn-primary mb-4">Add New</button>
                         </a>
-                        <a href="{% url 'export_records_csv' %}">
+                        <a href="{% url 'records:export_records_csv' %}">
                             <button type="button" class="btn btn-outline-secondary mb-4">Export as CSV</button>
                         </a>
 
 
-                        <a href="{% url 'record_detail' record.pk %}" class="btn btn-outline-primary btn-sm">View Details</a>
+                        <a href="{% url 'records:record_detail' record.pk %}" class="btn btn-outline-primary btn-sm">View Details</a>
                     </div>
                 </div>
             </div>

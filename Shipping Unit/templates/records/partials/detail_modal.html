@@ -1,0 +1,39 @@
+
+<!-- Record Detail Modal Content -->
+<div class="modal-header">
+  <h5 class="modal-title">{{ record.name }}'s Details</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <p><strong>Email:</strong> {{ record.email }}</p>
+  <p><strong>Phone:</strong> {{ record.phone }}</p>
+  <p><strong>Age:</strong> {{ record.age }}</p>
+  <p><strong>Level:</strong> {{ record.level }}</p>
+  <p><strong>Active:</strong> {{ record.active|yesno:"Yes,No" }}</p>
+  <p><strong>Competitive:</strong> {{ record.competitive|yesno:"Yes,No" }}</p>
+  <p><strong>Challenges:</strong> {{ record.challenges }}</p>
+  <p><strong>Resources:</strong> {{ record.resources }}</p>
+  <p><strong>Recommendations:</strong> {{ record.recommendations }}</p>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#editModal"
+    data-url="{% url 'record_edit' record.pk %}">
+    Edit
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-outline-danger"
+    data-bs-toggle="modal"
+    data-bs-target="#deleteModal"
+    data-record-id="{{ record.pk }}"
+    data-record-name="{{ record.name }}">
+    Delete
+  </button>
+
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>

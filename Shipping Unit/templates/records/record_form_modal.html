@@ -1,0 +1,49 @@
+<form method="post" class="needs-validation">
+  {% csrf_token %}
+
+  <div class="card mb-3">
+    <div class="card-header bg-primary text-white">Basic Info</div>
+    <div class="card-body">
+      <div class="mb-2">
+        {{ form.name.label_tag }} {{ form.name }}
+      </div>
+      <div class="mb-2">
+        {{ form.email.label_tag }} {{ form.email }}
+      </div>
+      <div class="mb-2">
+        {{ form.phone.label_tag }} {{ form.phone }}
+      </div>
+      <div class="mb-2">
+        {{ form.age.label_tag }} {{ form.age }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header bg-info text-white">Preferences</div>
+    <div class="card-body">
+      <div class="mb-2">{{ form.active.label_tag }} {{ form.active }}</div>
+      <div class="mb-2">{{ form.competitive.label_tag }} {{ form.competitive }}</div>
+      <div class="mb-2">{{ form.level.label_tag }} {{ form.level }}</div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header bg-secondary text-white">Additional Info</div>
+    <div class="card-body">
+      <div class="mb-2">
+        {{ form.challenges.label_tag }} {{ form.challenges }}
+      </div>
+      <div class="mb-2">
+        {{ form.resources.label_tag }} {{ form.resources }}
+      </div>
+      <div class="mb-2">
+        {{ form.recommendations.label_tag }} {{ form.recommendations }}
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-3">
+    <button type="submit" class="btn btn-success">Save Changes</button>
+  </div>
+</form>
