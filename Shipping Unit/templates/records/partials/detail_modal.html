@@ -18,12 +18,11 @@
 <div class="modal-footer">
   <button
     type="button"
-    class="btn btn-outline-primary"
-    data-bs-toggle="modal"
-    data-bs-target="#editModal"
-    data-url="{% url 'record_edit' record.pk %}">
+    class="btn btn-outline-primary open-edit-from-detail"
+    data-url="{% url 'records:record_edit' record.pk %}">
     Edit
   </button>
+
 
   <button
     type="button"
@@ -37,3 +36,36 @@
 
   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const detailModal = document.getElementById("detailModal");
+  const editModal = document.getElementById("editModal");
+  const editModalBody = document.getElementById("editModalBody");
+
+  document.body.addEventListener("click", function (event) {
+    if (event.target.classList.contains("open-edit-from-detail")) {
+      const editUrl = event.target.getAttribute("data-url");
+
+      // Close the detail modal
+      const detailInstance = bootstrap.Modal.getInstance(detailModal);
+      detailInstance.hide();
+
+      // After modal is hidden, load and show the edit modal
+      detailModal.addEventListener("hidden.bs.modal", function handler() {
+        fetch(editUrl, {
+          headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .then(response => response.json())
+        .then(data => {
+          editModalBody.innerHTML = data.html;
+          const editInstance = new bootstrap.Modal(editModal);
+          editInstance.show();
+        });
+
+        // Remove this one-time event listener
+        detailModal.removeEventListener("hidden.bs.modal", handler);
+      });
+    }
+  });
+});
+</script>
