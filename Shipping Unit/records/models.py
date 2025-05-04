@@ -10,11 +10,12 @@ class Record(models.Model):
 
     active = models.BooleanField(
         default=False, verbose_name="Is your child currently in gymnastics?")
+    home_gym = models.CharField(max_length=100, verbose_name="Home Gym?")
     competitive = models.BooleanField(
         default=False, verbose_name="Do they compete in competitions?")
     level = models.CharField(
         max_length=50,
-
+        blank=True,
         verbose_name="Competitive Level (Level/Xcel/IGH)"
     )
 
@@ -28,7 +29,7 @@ class Record(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
-        return reverse("record_detail", args=[str(self.pk)])
+        return reverse("records:record_detail", args=[str(self.pk)])
 
     def __str__(self):
         return f"{self.name} ({self.email})"

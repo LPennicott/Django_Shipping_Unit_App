@@ -40,13 +40,7 @@
                   View Details
                 </button>
 
-                <button class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#editModal"
-                        data-record-id="{{ record.id }}"
-                        data-record-name="{{ record.name }}"
-                        data-url="{% url 'records:record_edit' record.id %}">
-                    Edit
-                </button>
+                <a href="{% url 'records:record_edit' record.pk %}" class="btn btn-sm btn-primary">Edit</a>
                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                         data-bs-target="#deleteModal"
                         data-record-id="{{ record.id }}"
@@ -90,21 +84,6 @@
           <button type="submit" class="btn btn-danger">Delete</button>
         </div>
       </form>
-    </div>
-  </div>
-</div>
-
-<!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Record</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="editModalBody">
-        <!-- Form will be loaded here via AJAX -->
-      </div>
     </div>
   </div>
 </div>
@@ -171,52 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error("AJAX delete error:", err);
         }
     });
-// Edit Record
-    const editModal = document.getElementById('editModal');
-    const editModalBody = document.getElementById('editModalBody');
-
-    editModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const editUrl = button.getAttribute('data-url');
-
-        fetch(editUrl, {
-            headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        })
-        .then(response => response.text())
-        .then(html => {
-            editModalBody.innerHTML = html;
-
-            const form = editModal.querySelector("form");
-            if (form) {
-                form.addEventListener("submit", function (e) {
-                    e.preventDefault();
-                    const formData = new FormData(form);
-                    const csrfToken = form.querySelector("[name=csrfmiddlewaretoken]").value;
-
-                    fetch(editUrl, {
-                        method: "POST",
-                        headers: {
-                            "X-CSRFToken": csrfToken,
-                            "X-Requested-With": "XMLHttpRequest"
-                        },
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            bootstrap.Modal.getInstance(editModal).hide();
-                            location.reload();
-                        } else {
-                            editModalBody.innerHTML = data.html;
-                        }
-                    });
-                });
-            }
-        });
-    });
-
+// Detail
     const detailModal = document.getElementById("detailModal");
     detailModal.addEventListener("show.bs.modal", function (event) {
         const button = event.relatedTarget;

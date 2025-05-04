@@ -1,44 +1,58 @@
 <form method="post" class="needs-validation">
   {% csrf_token %}
 
-  <div class="card mb-3">
+  <div class="card mb-3 shadow">
     <div class="card-header bg-primary text-white">Basic Info</div>
     <div class="card-body">
-      <div class="mb-2">
-        {{ form.name.label_tag }} {{ form.name }}
+      <div class="mb-3">
+        <label>{{ form.name.label }}</label><br>
+        {{ form.name }}
       </div>
-      <div class="mb-2">
-        {{ form.email.label_tag }} {{ form.email }}
+      <div class="mb-3">
+        <label>{{ form.email.label }}</label><br>
+        {{ form.email }}
       </div>
-      <div class="mb-2">
-        {{ form.phone.label_tag }} {{ form.phone }}
+      <div class="mb-3">
+        <label>{{ form.phone.label }}</label><br>
+        {{ form.phone }}
       </div>
-      <div class="mb-2">
-        {{ form.age.label_tag }} {{ form.age }}
+      <div class="mb-3" style="max-width: 100px;">
+        <label>{{ form.age.label }}</label><br>
+        {{ form.age }}
       </div>
     </div>
   </div>
 
-  <div class="card mb-3">
+  <div class="card mb-3 shadow">
     <div class="card-header bg-info text-white">Preferences</div>
     <div class="card-body">
-      <div class="mb-2">{{ form.active.label_tag }} {{ form.active }}</div>
-      <div class="mb-2">{{ form.competitive.label_tag }} {{ form.competitive }}</div>
-      <div class="mb-2">{{ form.level.label_tag }} {{ form.level }}</div>
+      <div class="form-check mb-2">
+        {{ form.active }} {{ form.active.label_tag }}
+      </div>
+      <div class="form-check mb-2">
+        {{ form.competitive }} {{ form.competitive.label_tag }}
+      </div>
+      <div class="mb-3">
+        <label>{{ form.level.label }}</label><br>
+        {{ form.level }}
+      </div>
     </div>
   </div>
 
-  <div class="card mb-3">
+  <div class="card mb-3 shadow">
     <div class="card-header bg-secondary text-white">Additional Info</div>
     <div class="card-body">
-      <div class="mb-2">
-        {{ form.challenges.label_tag }} {{ form.challenges }}
+      <div class="mb-3">
+        <label>{{ form.challenges.label }}</label><br>
+        {{ form.challenges }}
       </div>
-      <div class="mb-2">
-        {{ form.resources.label_tag }} {{ form.resources }}
+      <div class="mb-3">
+        <label>{{ form.resources.label }}</label><br>
+        {{ form.resources }}
       </div>
-      <div class="mb-2">
-        {{ form.recommendations.label_tag }} {{ form.recommendations }}
+      <div class="mb-3">
+        <label>{{ form.recommendations.label }}</label><br>
+        {{ form.recommendations }}
       </div>
     </div>
   </div>

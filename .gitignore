@@ -1,2 +1,4 @@
 *.pyc
 venv/
+*.zip
+updated_edit_templates/*

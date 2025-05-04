@@ -101,40 +101,12 @@ class RecordUpdateView(UpdateView):
     model = Record
     form_class = RecordForm
     template_name = 'records/record_form_modal.html'
-    success_url = reverse_lazy('record_list')
-
-    def get_template_names(self):
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return ['records/partials/edit_form.html']
-        return [self.template_name]
-
-    def form_valid(self, form):
-        self.object = form.save()
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({'success': True})
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            html = render_to_string(
-                'records/partials/edit_form.html', {'form': form}, request=self.request
-            )
-            return JsonResponse({'success': False, 'html': html})
-        return super().form_invalid(form)
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            context = self.get_context_data()
-            html = render_to_string(
-                'records/partials/edit_form.html', context, request=request)
-            return JsonResponse({'html': html})
-        return super().get(request, *args, **kwargs)
+    success_url = reverse_lazy('records:record_list')
 
 
 class RecordDeleteView(DeleteView):
     model = Record
-    success_url = reverse_lazy('record_list')
+    success_url = reverse_lazy('records:record_list')
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
